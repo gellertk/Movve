@@ -7,17 +7,26 @@
 
 import Foundation
 
-enum Category {
+enum Category: String {
     
-    case action
-    case adventure
-    case comedy
-    case drama
-    case fantasy
-    case horror
-    case mystery
-    case romance
-    case thriller
-    case western
+    case action = "Action"
+    case adventure = "Adventure"
+    case comedy = "Comedy"
+    case drama = "Drama"
+    case fantasy = "Fantasy"
+    case horror = "Horror"
+    case mystery = "Mystery"
+    case romance = "Romance"
+    case thriller = "Thriller"
+    case western = "Western"
+    
+}
+
+extension Array where Element == Category {
+    
+    func toCategoriesString() -> String {
+        
+        return self.map { $0.rawValue }.joined(separator: ", ")
+    }
     
 }

@@ -7,18 +7,42 @@
 
 import Foundation
 
-struct Film {
-    
-    let title: String
-    let image: URL
-    let actors: [Actor: String]
-    let categorys: [Category]
-    let releaseDate: Date
-    let duration: String
-    let desc: String
-    var rating: Double
-    var isFavourite: Bool
-    var isStarted: Bool
+//enum FilmsViewData {
+//    
+//    case initial
+//    case loading([Film])
+//    case success([Film])
+//    case failure([Film])
+//    
+//    
+//    
+//}
 
+struct Film: Hashable {
     
+    var title: String
+    var image: Data?
+    var actors: [Actor: String]?
+    var categories: [Category]?
+    var releaseDate: Date?
+    var duration: String?
+    var desc: String?
+    var rating: Double?
+    var isFavourite: Bool?
+    var isStarted: Bool?
+    
+//    init(title: String, image: Data?, actors: [Actor : String], categories: [Category], releaseDate: Date, duration: String, desc: String, rating: Double, isFavourite: Bool, isStarted: Bool) {
+//        self.title = title
+//        self.image = image
+//        self.actors = actors
+//        self.categories = categories
+//        self.releaseDate = releaseDate
+//        self.duration = duration
+//        self.desc = desc
+//        self.rating = rating
+//        self.isFavourite = isFavourite
+//        self.isStarted = isStarted
+//    }
+
 }
+

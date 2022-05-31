@@ -1,5 +1,5 @@
 //
-//  FilmsView.swift
+//  FilmsViewController.swift
 //  Movve
 //
 //  Created by Кирилл  Геллерт on 31.05.2022.
@@ -7,12 +7,43 @@
 
 import UIKit
 
-class FilmsView: UIView {
+fileprivate extension FilmsViewController {
+    
+    enum Section {
+        case popular
+        case tvShows
+        case started
+    }
+    
+    typealias CustomCellRegistration = UICollectionView.CellRegistration<FilmCollectionViewCell, Film>
+    typealias CustomDataSource = UICollectionViewDiffableDataSource<Section, Film>
+    typealias CustomSnapshot = NSDiffableDataSourceSnapshot<Section, Film>
+    
+}
 
+class FilmsViewController: UIViewController {
+    
+    var viewModel: FilmsViewModel
+    
+    init(viewModel: FilmsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.updateViewData
+    }
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.delegate = self
         
         return collectionView
     }()
@@ -39,4 +70,12 @@ class FilmsView: UIView {
         return layout
     }
 
+}
+
+extension FilmsViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didTapFilmCell()
+    }
+    
 }
