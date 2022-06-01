@@ -22,11 +22,4 @@ enum Category: String {
     
 }
 
-extension Array where Element == Category {
-    
-    func toCategoriesString() -> String {
-        
-        return self.map { $0.rawValue }.joined(separator: ", ")
-    }
-    
-}
+

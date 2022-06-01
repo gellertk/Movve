@@ -18,7 +18,7 @@ import Foundation
 //    
 //}
 
-struct Film: Hashable {
+struct Film {
     
     var title: String
     var image: Data?
@@ -30,6 +30,13 @@ struct Film: Hashable {
     var rating: Double?
     var isFavourite: Bool?
     var isStarted: Bool?
+    var section: FilmSection?
+    
+    init(title: String, releaseDate: DateComponents, section: FilmSection) {
+        self.title = title
+        self.releaseDate = releaseDate.toDate()
+        self.section = section
+    }
     
 //    init(title: String, image: Data?, actors: [Actor : String], categories: [Category], releaseDate: Date, duration: String, desc: String, rating: Double, isFavourite: Bool, isStarted: Bool) {
 //        self.title = title
