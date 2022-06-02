@@ -7,13 +7,17 @@
 
 import UIKit
 
-class FilmCollectionViewCell: UICollectionViewCell {
+class FilmsCollectionViewCell: UICollectionViewCell {
     
-    var filmViewModel: FilmViewModel! {
+    lazy var imageHeightPopularConstraint = imageView.heightAnchor.constraint(equalToConstant: 190)
+    
+    var filmViewModel: FilmViewModelProtocol? {
         didSet {
             imageView.image = UIImage(data: filmViewModel.image ?? Data())
             titleLabel.text = filmViewModel.title
             releaseDateLabel.text = filmViewModel.releaseDate
+            imageHeightPopularConstraint.constant = filmViewModel.imageHeightConstant
+            imageHeightPopularConstraint.isActive = true
         }
     }
     
@@ -40,7 +44,7 @@ class FilmCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .customGray
-
+        
         return label
     }()
     
@@ -55,14 +59,14 @@ class FilmCollectionViewCell: UICollectionViewCell {
     
 }
 
-private extension FilmCollectionViewCell {
+private extension FilmsCollectionViewCell {
     
     func setupView() {
         contentView.addSubviews([
-                     imageView,
-                     titleLabel,
-                     releaseDateLabel
-                    ])
+            imageView,
+            titleLabel,
+            releaseDateLabel
+        ])
         setupConstraints()
     }
     
@@ -71,7 +75,6 @@ private extension FilmCollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 200),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -82,7 +85,7 @@ private extension FilmCollectionViewCell {
             releaseDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             releaseDateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-           
+        
     }
     
 }

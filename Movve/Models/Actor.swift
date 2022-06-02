@@ -10,6 +10,6 @@ import Foundation
 struct Actor: Hashable {
     
     let name: String
-    let image: URL
+    let image: Data?
     
 }

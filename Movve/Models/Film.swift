@@ -7,18 +7,7 @@
 
 import Foundation
 
-//enum FilmsViewData {
-//    
-//    case initial
-//    case loading([Film])
-//    case success([Film])
-//    case failure([Film])
-//    
-//    
-//    
-//}
-
-struct Film {
+struct Film: Hashable {
     
     var title: String
     var image: Data?
@@ -37,19 +26,6 @@ struct Film {
         self.releaseDate = releaseDate.toDate()
         self.section = section
     }
-    
-//    init(title: String, image: Data?, actors: [Actor : String], categories: [Category], releaseDate: Date, duration: String, desc: String, rating: Double, isFavourite: Bool, isStarted: Bool) {
-//        self.title = title
-//        self.image = image
-//        self.actors = actors
-//        self.categories = categories
-//        self.releaseDate = releaseDate
-//        self.duration = duration
-//        self.desc = desc
-//        self.rating = rating
-//        self.isFavourite = isFavourite
-//        self.isStarted = isStarted
-//    }
 
 }
 

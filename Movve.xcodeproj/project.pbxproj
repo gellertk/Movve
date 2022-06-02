@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CBADD487284635D700908EB5 /* FilmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD486284635D700908EB5 /* FilmCollectionViewCell.swift */; };
+		CBABCE142848F77800F8440E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBABCE132848F77800F8440E /* UIImage+Extension.swift */; };
+		CBADD487284635D700908EB5 /* FilmsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD486284635D700908EB5 /* FilmsCollectionViewCell.swift */; };
 		CBADD4892846360400908EB5 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD4882846360400908EB5 /* Film.swift */; };
 		CBADD48E28463DEB00908EB5 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD48D28463DEB00908EB5 /* Actor.swift */; };
 		CBADD49028463E7B00908EB5 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD48F28463E7B00908EB5 /* Category.swift */; };
@@ -27,7 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CBADD486284635D700908EB5 /* FilmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBABCE132848F77800F8440E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		CBADD486284635D700908EB5 /* FilmsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADD4882846360400908EB5 /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
 		CBADD48D28463DEB00908EB5 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		CBADD48F28463E7B00908EB5 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -73,9 +75,9 @@
 		CBADD48B28463DA500908EB5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CBADD4A42848052700908EB5 /* TitleSupplementaryView.swift */,
 				CBDBBEE72846035900C69586 /* FilmsViewController.swift */,
-				CBADD486284635D700908EB5 /* FilmCollectionViewCell.swift */,
+				CBADD486284635D700908EB5 /* FilmsCollectionViewCell.swift */,
+				CBADD4A42848052700908EB5 /* TitleSupplementaryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -91,10 +93,11 @@
 		CBADD4972846685600908EB5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				CBADD4952846685100908EB5 /* Date+Extension.swift */,
-				CBADD49D2847922F00908EB5 /* UIColor+Extension.swift */,
-				CBADD4A02847D62600908EB5 /* DateComponents+Extension.swift */,
 				CBADD4A22847D68300908EB5 /* Array+Extension.swift */,
+				CBADD4952846685100908EB5 /* Date+Extension.swift */,
+				CBADD4A02847D62600908EB5 /* DateComponents+Extension.swift */,
+				CBADD49D2847922F00908EB5 /* UIColor+Extension.swift */,
+				CBABCE132848F77800F8440E /* UIImage+Extension.swift */,
 				CBADD4992847687700908EB5 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
@@ -109,13 +112,13 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		CBADD49F2847D50A00908EB5 /* MainScreen */ = {
+		CBADD49F2847D50A00908EB5 /* Films */ = {
 			isa = PBXGroup;
 			children = (
 				CBADD48B28463DA500908EB5 /* Views */,
 				CBADD48C28463DAD00908EB5 /* ViewModels */,
 			);
-			path = MainScreen;
+			path = Films;
 			sourceTree = "<group>";
 		};
 		CBC66E992844E1670011C8D2 = {
@@ -138,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADD48A28463D9900908EB5 /* Models */,
-				CBADD49F2847D50A00908EB5 /* MainScreen */,
+				CBADD49F2847D50A00908EB5 /* Films */,
 				CBADD4972846685600908EB5 /* Extensions */,
 				CBADD4982846A78600908EB5 /* SupportingFiles */,
 				CBC66EAE2844E16A0011C8D2 /* Assets.xcassets */,
@@ -222,13 +225,14 @@
 				CBADD49A2847687700908EB5 /* UIView+Extension.swift in Sources */,
 				CBADD4922846434900908EB5 /* FilmsViewModel.swift in Sources */,
 				CBADD4962846685100908EB5 /* Date+Extension.swift in Sources */,
-				CBADD487284635D700908EB5 /* FilmCollectionViewCell.swift in Sources */,
+				CBADD487284635D700908EB5 /* FilmsCollectionViewCell.swift in Sources */,
 				CBADD49C28476F3400908EB5 /* FilmSection.swift in Sources */,
 				CBC66EA62844E1670011C8D2 /* AppDelegate.swift in Sources */,
 				CBDBBEE82846035900C69586 /* FilmsViewController.swift in Sources */,
 				CBC66EA82844E1670011C8D2 /* SceneDelegate.swift in Sources */,
 				CBADD4A52848052700908EB5 /* TitleSupplementaryView.swift in Sources */,
 				CBADD49028463E7B00908EB5 /* Category.swift in Sources */,
+				CBABCE142848F77800F8440E /* UIImage+Extension.swift in Sources */,
 				CBADD49E2847922F00908EB5 /* UIColor+Extension.swift in Sources */,
 				CBADD4A32847D68300908EB5 /* Array+Extension.swift in Sources */,
 				CBADD4892846360400908EB5 /* Film.swift in Sources */,
