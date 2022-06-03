@@ -7,18 +7,7 @@
 
 import Foundation
 
-//enum FilmsViewData {
-//    
-//    case initial
-//    case loading([Film])
-//    case success([Film])
-//    case failure([Film])
-//    
-//    
-//    
-//}
-
-struct Film {
+struct Film: Hashable {
     
     var title: String
     var image: Data?
@@ -37,19 +26,28 @@ struct Film {
         self.releaseDate = releaseDate.toDate()
         self.section = section
     }
-    
-//    init(title: String, image: Data?, actors: [Actor : String], categories: [Category], releaseDate: Date, duration: String, desc: String, rating: Double, isFavourite: Bool, isStarted: Bool) {
-//        self.title = title
-//        self.image = image
-//        self.actors = actors
-//        self.categories = categories
-//        self.releaseDate = releaseDate
-//        self.duration = duration
-//        self.desc = desc
-//        self.rating = rating
-//        self.isFavourite = isFavourite
-//        self.isStarted = isStarted
-//    }
 
+}
+
+struct FilmsProvider {
+    
+    func fetchData() -> [Film] {
+        return [Film(title: "Чудо собака", releaseDate: DateComponents(year: 2010, month: 1, day: 8), section: .popular),
+                Film(title: "Чудо кошка", releaseDate: DateComponents(year: 2011, month: 6, day: 1), section: .popular),
+                Film(title: "Чудо песик", releaseDate: DateComponents(year: 2019, month: 3, day: 22),  section: .popular),
+                Film(title: "Чудо слоник", releaseDate: DateComponents(year: 2019, month: 6, day: 31), section: .popular),
+                Film(title: "Чудо крокодильчик", releaseDate: DateComponents(year: 2019, month: 6, day: 5), section: .popular),
+                Film(title: "Чудо вуман", releaseDate: DateComponents(year: 2019, month: 4, day: 8), section: .popular),
+                
+                Film(title: "Про кота  asdasdasdasdasdasdasds", releaseDate: DateComponents(year: 2021, month: 6, day: 8), section: .tvShows),
+                Film(title: "Про слона", releaseDate: DateComponents(year: 2019, month: 2, day: 8), section: .tvShows),
+                Film(title: "Про бобра", releaseDate: DateComponents(year: 2019, month: 6, day: 8), section: .tvShows),
+                Film(title: "Про муху asdasdasdasdasdasdasds", releaseDate: DateComponents(year: 2019, month: 6, day: 8), section: .tvShows),
+                
+                Film(title: "Чудо бублик", releaseDate: DateComponents(year: 2019, month: 6, day: 8), section: .started),
+                Film(title: "Чудо бублик и колобок с пельменями фыв выф", releaseDate: DateComponents(year: 2019, month: 6, day: 8), section: .started)
+        ]
+    }
+    
 }
 
