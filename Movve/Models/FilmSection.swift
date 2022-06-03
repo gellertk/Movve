@@ -12,5 +12,6 @@ enum FilmSection: String, CaseIterable {
     case popular = "Popular movie"
     case tvShows = "TV Show"
     case started = "Continue Watching"
+    case searched = "Searched"
     
 }

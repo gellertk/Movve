@@ -7,17 +7,19 @@
 
 import UIKit
 
-class FilmsCollectionViewCell: UICollectionViewCell {
+class FilmsCollectionViewCell: UICollectionViewCell  {
     
-    lazy var imageHeightPopularConstraint = imageView.heightAnchor.constraint(equalToConstant: 190)
+    typealias ViewModel = FilmViewModel
     
-    var filmViewModel: FilmViewModelProtocol? {
+    lazy var imageHeightPopularConstraint = imageView.heightAnchor.constraint(equalToConstant:
+                                                                              K.Numeric.hightSectionImageHeight)
+    
+    var viewModel: ViewModel? {
         didSet {
-            imageView.image = UIImage(data: filmViewModel.image ?? Data())
-            titleLabel.text = filmViewModel.title
-            releaseDateLabel.text = filmViewModel.releaseDate
-            imageHeightPopularConstraint.constant = filmViewModel.imageHeightConstant
-            imageHeightPopularConstraint.isActive = true
+            guard let viewModel = viewModel else {
+                return
+            }
+            viewModelChanged(viewModel)
         }
     }
     
@@ -55,6 +57,14 @@ class FilmsCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func viewModelChanged(_ viewModel: ViewModel) {
+        imageView.image = UIImage(data: viewModel.image ?? Data())
+        titleLabel.text = viewModel.title
+        releaseDateLabel.text = viewModel.releaseDate
+        imageHeightPopularConstraint.constant = viewModel.imageHeightConstant
+        imageHeightPopularConstraint.isActive = true
     }
     
 }
