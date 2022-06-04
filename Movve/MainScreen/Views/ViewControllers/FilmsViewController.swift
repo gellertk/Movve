@@ -7,22 +7,14 @@
 
 import UIKit
 
-extension FilmsViewController {
-    
-    typealias CustomCellRegistration = UICollectionView.CellRegistration<FilmsCollectionViewCell, FilmViewModel>
-    typealias CustomDataSource = UICollectionViewDiffableDataSource<FilmSection, FilmViewModel>
-    typealias CustomSnapshot = NSDiffableDataSourceSnapshot<FilmSection, FilmViewModel>
-    
-}
-
 class FilmsViewController: UIViewController {
-    
+        
     typealias ViewModel = FilmsViewModel
     
     var viewModel: ViewModel?
     
     private var dataSource: CustomDataSource!
-    private let mainView: FilmsView = FilmsView()
+    private let mainView = FilmsView()
     
     override func loadView() {
         view = mainView
@@ -45,12 +37,19 @@ class FilmsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        setTabBarHidden(false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        setTabBarHidden(true)
+    }
+    
+    private func setTabBarHidden(_ hidden: Bool) {
+        guard let tabBar = tabBarController as? MainTabBarController else {
+            return
+        }
+        tabBar.setHidden(hidden)
     }
     
 }
@@ -58,21 +57,47 @@ class FilmsViewController: UIViewController {
 private extension FilmsViewController {
     
     func initialSetup() {
+        extendedLayoutIncludesOpaqueBars = true
+        title = "Movve"
+        let rightButton = UIButton()
+        rightButton.setImage(.magnifyingglass, for: .normal)
+            //rightButton.setTitle("Right Button", for: .normal)
+            rightButton.setTitleColor(.purple, for: .normal)
+            rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+            navigationController?.navigationBar.addSubview(rightButton)
+            rightButton.tag = 1
+            rightButton.frame = CGRect(x: self.view.frame.width, y: 0, width: 120, height: 20)
+
+            let targetView = self.navigationController?.navigationBar
+
+            let trailingContraint = NSLayoutConstraint(item: rightButton, attribute:
+                .trailingMargin, relatedBy: .equal, toItem: targetView,
+                                 attribute: .trailingMargin, multiplier: 1.0, constant: -16)
+            let bottomConstraint = NSLayoutConstraint(item: rightButton, attribute: .bottom, relatedBy: .equal,
+                                            toItem: targetView, attribute: .bottom, multiplier: 1.0, constant: -10)
+            rightButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([trailingContraint, bottomConstraint])
         viewModel?.updateView = {
             DispatchQueue.main.async { [unowned self] in
                 configureDataSource()
-                applyInitialSnapshot()
+                applySnapshot()
             }
         }
         
         viewModel?.fetchData()
     }
     
+    @objc func rightButtonTapped() {
+        //navigationItem.searchController = mainView.searchController
+    }
+    
     func refreshFilms() {
         viewModel?.updateView = {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
-                applyInitialSnapshot()
-                mainView.refreshControl.endRefreshing()
+                applySnapshot()
+                DispatchQueue.main.async { [unowned self] in
+                    mainView.collectionView.refreshControl?.endRefreshing()
+                }
             }
         }
         
@@ -82,7 +107,7 @@ private extension FilmsViewController {
     func setupDelegates() {
         mainView.delegate = self
         mainView.collectionView.delegate = self
-        mainView.searchBar.delegate = self
+        mainView.searchController.searchResultsUpdater = self
     }
     
     func configureDataSource() {
@@ -114,9 +139,8 @@ private extension FilmsViewController {
         
     }
     
-    func applyInitialSnapshot() {
-        guard let viewModel = viewModel,
-              let films = viewModel.films else {
+    func applySnapshot() {
+        guard let films = viewModel?.films else {
             return
         }
         var snapshot = CustomSnapshot()
@@ -128,14 +152,14 @@ private extension FilmsViewController {
         }
         dataSource.apply(snapshot, animatingDifferences: true)
     }
-    
+
     func performQuery(with filter: String) {
         guard let viewModel = viewModel else {
             return
         }
         
         if filter.isEmpty {
-            applyInitialSnapshot()
+            applySnapshot()
             return
         }
         
@@ -145,6 +169,17 @@ private extension FilmsViewController {
         snapshot.appendSections([.searched])
         snapshot.appendItems(filteredFilms)
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+}
+
+extension FilmsViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else {
+            return
+        }
+        performQuery(with: text)
     }
     
 }

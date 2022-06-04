@@ -23,7 +23,15 @@ class FilmsView: UIView {
         return refreshControl
     }()
     
-    lazy var searchBar: UISearchBar = {
+    var searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.hidesNavigationBarDuringPresentation = false
+        //searchController.searchBar.placeholder = "Search"
+        
+        return searchController
+    }()
+    
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .customBlack
         searchBar.barTintColor = .customBlack
@@ -44,24 +52,24 @@ class FilmsView: UIView {
         return button
     }()
     
-    let customTitle: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .largeTitle,
-                                    compatibleWith: .init(legibilityWeight: .bold))
-        var myMutableString = NSMutableAttributedString(string: "Movve")
-        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor,
-                                     value: UIColor.white,
-                                     range: NSRange(location: 0, length: 3))
-        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor,
-                                     value: UIColor.red,
-                                     range: NSRange(location: 3, length: 2))
-        
-        label.attributedText = myMutableString
-        
-        label.backgroundColor = .clear
-        
-        return label
-    }()
+    //    let customTitle: UILabel = {
+    //        let label = UILabel()
+    //        label.font = .preferredFont(forTextStyle: .largeTitle,
+    //                                    compatibleWith: .init(legibilityWeight: .bold))
+    //        var myMutableString = NSMutableAttributedString(string: "Movve")
+    //        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor,
+    //                                     value: UIColor.white,
+    //                                     range: NSRange(location: 0, length: 3))
+    //        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor,
+    //                                     value: UIColor.red,
+    //                                     range: NSRange(location: 3, length: 2))
+    //
+    //        label.attributedText = myMutableString
+    //
+    //        label.backgroundColor = .clear
+    //
+    //        return label
+    //    }()
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
@@ -89,9 +97,9 @@ private extension FilmsView {
     func setupView() {
         backgroundColor = .customBlack
         addSubviews([
-            searchBar,
-            customTitle,
-            searchButton,
+            //searchBar,
+            //customTitle,
+            //searchButton,
             collectionView
         ])
         setupConstraints()
@@ -100,18 +108,19 @@ private extension FilmsView {
     func setupConstraints() {
         let defaultBorderConstraint = CGFloat(20)
         NSLayoutConstraint.activate([
-            customTitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            customTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: defaultBorderConstraint),
+            //            customTitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            //            customTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: defaultBorderConstraint),
             
-            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: defaultBorderConstraint / 2),
-            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -defaultBorderConstraint / 2),
-            searchBar.centerYAnchor.constraint(equalTo: customTitle.centerYAnchor),
+            //            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: defaultBorderConstraint / 2),
+            //            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -defaultBorderConstraint / 2),
+            //            searchBar.centerYAnchor.constraint(equalTo: customTitle.centerYAnchor),
+            //
+            //            searchButton.centerYAnchor.constraint(equalTo: customTitle.centerYAnchor),
+            //            searchButton.topAnchor.constraint(equalTo: topAnchor),
+            //            searchButton.trailingAnchor.constraint(equalTo: trailingAnchor,
+            //                                                   constant: -defaultBorderConstraint),
             
-            searchButton.centerYAnchor.constraint(equalTo: customTitle.centerYAnchor),
-            searchButton.trailingAnchor.constraint(equalTo: trailingAnchor,
-                                                   constant: -defaultBorderConstraint),
-            
-            collectionView.topAnchor.constraint(equalTo: customTitle.bottomAnchor, constant: defaultBorderConstraint),
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
@@ -170,7 +179,7 @@ private extension FilmsView {
     
     func setupSearchBar(isHidden: Bool) {
         searchButton.isHidden = !isHidden
-        customTitle.isHidden = !isHidden
+        //customTitle.isHidden = !isHidden
         UIView.transition(with: self,
                           duration: 0.2,
                           options: .transitionCrossDissolve,

@@ -24,6 +24,10 @@
 		CBC66EA82844E1670011C8D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC66EA72844E1670011C8D2 /* SceneDelegate.swift */; };
 		CBC66EAF2844E16A0011C8D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC66EAE2844E16A0011C8D2 /* Assets.xcassets */; };
 		CBC66EB22844E16A0011C8D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC66EB02844E16A0011C8D2 /* LaunchScreen.storyboard */; };
+		CBD03562284BAE5C0001767A /* FloatingBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD03561284BAE5C0001767A /* FloatingBarView.swift */; };
+		CBD03565284BAFAA0001767A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD03564284BAFAA0001767A /* MainTabBarController.swift */; };
+		CBD03567284BBFE50001767A /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD03566284BBFE50001767A /* UIStackView+Extension.swift */; };
+		CBD03569284BE7160001767A /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD03568284BE7160001767A /* UINavigationController+Extension.swift */; };
 		CBDBBEE82846035900C69586 /* FilmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDBBEE72846035900C69586 /* FilmsViewController.swift */; };
 		CBF26B4F2849F6E400B64CAD /* FilmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF26B4E2849F6E400B64CAD /* FilmViewModel.swift */; };
 		CBF63A29284A0C8D0044A65E /* FilmsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF63A28284A0C8D0044A65E /* FilmsView.swift */; };
@@ -51,6 +55,10 @@
 		CBC66EAE2844E16A0011C8D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBC66EB12844E16A0011C8D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBC66EB32844E16A0011C8D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBD03561284BAE5C0001767A /* FloatingBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBarView.swift; sourceTree = "<group>"; };
+		CBD03564284BAFAA0001767A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		CBD03566284BBFE50001767A /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
+		CBD03568284BE7160001767A /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		CBDBBEE72846035900C69586 /* FilmsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewController.swift; sourceTree = "<group>"; };
 		CBF26B4E2849F6E400B64CAD /* FilmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewModel.swift; sourceTree = "<group>"; };
 		CBF63A28284A0C8D0044A65E /* FilmsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsView.swift; sourceTree = "<group>"; };
@@ -106,6 +114,8 @@
 				CBADD4952846685100908EB5 /* Date+Extension.swift */,
 				CBADD4A02847D62600908EB5 /* DateComponents+Extension.swift */,
 				CBADD49D2847922F00908EB5 /* UIColor+Extension.swift */,
+				CBD03566284BBFE50001767A /* UIStackView+Extension.swift */,
+				CBD03568284BE7160001767A /* UINavigationController+Extension.swift */,
 				CBABCE132848F77800F8440E /* UIImage+Extension.swift */,
 				CBADD4992847687700908EB5 /* UIView+Extension.swift */,
 			);
@@ -121,13 +131,13 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		CBADD49F2847D50A00908EB5 /* Films */ = {
+		CBADD49F2847D50A00908EB5 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
 				CBADD48B28463DA500908EB5 /* Views */,
 				CBADD48C28463DAD00908EB5 /* ViewModels */,
 			);
-			path = Films;
+			path = MainScreen;
 			sourceTree = "<group>";
 		};
 		CBC66E992844E1670011C8D2 = {
@@ -149,9 +159,10 @@
 		CBC66EA42844E1670011C8D2 /* Movve */ = {
 			isa = PBXGroup;
 			children = (
+				CBD03563284BAE620001767A /* MainTabBar */,
 				CBF63A33284A16C90044A65E /* Constants */,
 				CBADD48A28463D9900908EB5 /* Models */,
-				CBADD49F2847D50A00908EB5 /* Films */,
+				CBADD49F2847D50A00908EB5 /* MainScreen */,
 				CBADD4972846685600908EB5 /* Extensions */,
 				CBADD4982846A78600908EB5 /* SupportingFiles */,
 				CBC66EAE2844E16A0011C8D2 /* Assets.xcassets */,
@@ -159,6 +170,15 @@
 				CBC66EB32844E16A0011C8D2 /* Info.plist */,
 			);
 			path = Movve;
+			sourceTree = "<group>";
+		};
+		CBD03563284BAE620001767A /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CBD03564284BAFAA0001767A /* MainTabBarController.swift */,
+				CBD03561284BAE5C0001767A /* FloatingBarView.swift */,
+			);
+			path = MainTabBar;
 			sourceTree = "<group>";
 		};
 		CBF63A2C284A14410044A65E /* ViewControllers */ = {
@@ -267,6 +287,7 @@
 			files = (
 				CBADD4A12847D62600908EB5 /* DateComponents+Extension.swift in Sources */,
 				CBADD49A2847687700908EB5 /* UIView+Extension.swift in Sources */,
+				CBD03565284BAFAA0001767A /* MainTabBarController.swift in Sources */,
 				CBF63A29284A0C8D0044A65E /* FilmsView.swift in Sources */,
 				CBADD4922846434900908EB5 /* FilmsViewModel.swift in Sources */,
 				CBADD4962846685100908EB5 /* Date+Extension.swift in Sources */,
@@ -275,15 +296,18 @@
 				CBC66EA62844E1670011C8D2 /* AppDelegate.swift in Sources */,
 				CBF63A2B284A0CD80044A65E /* FilmsViewController+Extension.swift in Sources */,
 				CBDBBEE82846035900C69586 /* FilmsViewController.swift in Sources */,
+				CBD03569284BE7160001767A /* UINavigationController+Extension.swift in Sources */,
 				CBC66EA82844E1670011C8D2 /* SceneDelegate.swift in Sources */,
 				CBF26B4F2849F6E400B64CAD /* FilmViewModel.swift in Sources */,
 				CBADD4A52848052700908EB5 /* TitleSupplementaryView.swift in Sources */,
 				CBADD49028463E7B00908EB5 /* Category.swift in Sources */,
 				CBABCE142848F77800F8440E /* UIImage+Extension.swift in Sources */,
 				CBF63A32284A15ED0044A65E /* Constants.swift in Sources */,
+				CBD03562284BAE5C0001767A /* FloatingBarView.swift in Sources */,
 				CBADD49E2847922F00908EB5 /* UIColor+Extension.swift in Sources */,
 				CBADD4A32847D68300908EB5 /* Array+Extension.swift in Sources */,
 				CBADD4892846360400908EB5 /* Film.swift in Sources */,
+				CBD03567284BBFE50001767A /* UIStackView+Extension.swift in Sources */,
 				CBADD48E28463DEB00908EB5 /* Actor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
