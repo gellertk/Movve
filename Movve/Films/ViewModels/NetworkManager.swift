@@ -15,13 +15,14 @@ struct NetworkManager {
         AF.request(K.Url.urlMovie, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).response { (responseData) in
             guard let data = responseData.data else {return}
             do {
-                let movieData = try JSONDecoder().decode(FilmData.self, from: data)
+                let FilmData = try JSONDecoder().decode(FilmData.self, from: data)
                 
-                //                print(movieData.results[0].original_title)
-                //                print(movieData.results[0].overview)
-                //                print(movieData.results[0].original_language)
-                //                print(movieData.results[0].release_date)
-                //                print(movieData.results[0].vote_average)m
+                //                print(FilmData.results[0].original_title)
+                //                print(FilmData.results[0].overview)
+                //                print(FilmData.results[0].original_language)
+                //                print(FilmData.results[0].release_date)
+                //                print(FilmData.results[0].vote_average)m
+                // Здесь нужно вернуть весь массив FilmData.results[0]
                 
             } catch {
                 print("Error with loadind Film list: \(error.localizedDescription)")
@@ -41,6 +42,7 @@ struct NetworkManager {
 //                print(tvData.results[0].first_air_date)
 //                print(tvData.results[0].vote_average)
 //                print(tvData.results[0].id)
+                // Здесь нужно вернуть весь массив tvData.results[]
                 
                 
                 
@@ -61,6 +63,7 @@ struct NetworkManager {
                 let tvActorData = try JSONDecoder().decode(ActorData.self, from: data)
                 
                 //print(tvActorData.cast[0].original_name)
+                // Функцию нужно будет вызвать в вью моделе с подробностями о фильме, также нужно будет вернуть весь массив
             } catch {
                 print("Error with loading info about Actors: \(error.localizedDescription)")
             }
