@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Category: String {
+enum Category: String {      // Информации о категории фильмов в JSON-ах нет
     
     case action = "Action"
     case adventure = "Adventure"
