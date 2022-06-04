@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89577663284B509200A40BB2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 89577662284B509200A40BB2 /* Alamofire */; };
+		89577665284B54DE00A40BB2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89577664284B54DE00A40BB2 /* NetworkManager.swift */; };
+		89577667284B586500A40BB2 /* FilmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89577666284B586500A40BB2 /* FilmData.swift */; };
+		89577669284B58B900A40BB2 /* TvData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89577668284B58B900A40BB2 /* TvData.swift */; };
 		CBABCE142848F77800F8440E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBABCE132848F77800F8440E /* UIImage+Extension.swift */; };
 		CBADD487284635D700908EB5 /* FilmsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD486284635D700908EB5 /* FilmsCollectionViewCell.swift */; };
 		CBADD4892846360400908EB5 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD4882846360400908EB5 /* Film.swift */; };
-		CBADD48E28463DEB00908EB5 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD48D28463DEB00908EB5 /* Actor.swift */; };
+		CBADD48E28463DEB00908EB5 /* ActorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD48D28463DEB00908EB5 /* ActorData.swift */; };
 		CBADD49028463E7B00908EB5 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD48F28463E7B00908EB5 /* Category.swift */; };
 		CBADD4922846434900908EB5 /* FilmsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD4912846434900908EB5 /* FilmsViewModel.swift */; };
 		CBADD4962846685100908EB5 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD4952846685100908EB5 /* Date+Extension.swift */; };
@@ -36,10 +40,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		89577664284B54DE00A40BB2 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		89577666284B586500A40BB2 /* FilmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmData.swift; sourceTree = "<group>"; };
+		89577668284B58B900A40BB2 /* TvData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvData.swift; sourceTree = "<group>"; };
 		CBABCE132848F77800F8440E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CBADD486284635D700908EB5 /* FilmsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADD4882846360400908EB5 /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
-		CBADD48D28463DEB00908EB5 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		CBADD48D28463DEB00908EB5 /* ActorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorData.swift; sourceTree = "<group>"; };
 		CBADD48F28463E7B00908EB5 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		CBADD4912846434900908EB5 /* FilmsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewModel.swift; sourceTree = "<group>"; };
 		CBADD4952846685100908EB5 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -71,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89577663284B509200A40BB2 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +91,9 @@
 				CBADD4882846360400908EB5 /* Film.swift */,
 				CBADD48F28463E7B00908EB5 /* Category.swift */,
 				CBADD49B28476F3400908EB5 /* FilmSection.swift */,
-				CBADD48D28463DEB00908EB5 /* Actor.swift */,
+				89577666284B586500A40BB2 /* FilmData.swift */,
+				89577668284B58B900A40BB2 /* TvData.swift */,
+				CBADD48D28463DEB00908EB5 /* ActorData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -103,6 +113,7 @@
 			children = (
 				CBADD4912846434900908EB5 /* FilmsViewModel.swift */,
 				CBF26B4E2849F6E400B64CAD /* FilmViewModel.swift */,
+				89577664284B54DE00A40BB2 /* NetworkManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -231,6 +242,9 @@
 			dependencies = (
 			);
 			name = Movve;
+			packageProductDependencies = (
+				89577662284B509200A40BB2 /* Alamofire */,
+			);
 			productName = Movve;
 			productReference = CBC66EA22844E1670011C8D2 /* Movve.app */;
 			productType = "com.apple.product-type.application";
@@ -259,6 +273,9 @@
 				Base,
 			);
 			mainGroup = CBC66E992844E1670011C8D2;
+			packageReferences = (
+				89577661284B509200A40BB2 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = CBC66EA32844E1670011C8D2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -295,8 +312,11 @@
 				CBADD49C28476F3400908EB5 /* FilmSection.swift in Sources */,
 				CBC66EA62844E1670011C8D2 /* AppDelegate.swift in Sources */,
 				CBF63A2B284A0CD80044A65E /* FilmsViewController+Extension.swift in Sources */,
+				89577665284B54DE00A40BB2 /* NetworkManager.swift in Sources */,
 				CBDBBEE82846035900C69586 /* FilmsViewController.swift in Sources */,
 				CBD03569284BE7160001767A /* UINavigationController+Extension.swift in Sources */,
+				89577667284B586500A40BB2 /* FilmData.swift in Sources */,
+				89577669284B58B900A40BB2 /* TvData.swift in Sources */,
 				CBC66EA82844E1670011C8D2 /* SceneDelegate.swift in Sources */,
 				CBF26B4F2849F6E400B64CAD /* FilmViewModel.swift in Sources */,
 				CBADD4A52848052700908EB5 /* TitleSupplementaryView.swift in Sources */,
@@ -309,6 +329,7 @@
 				CBADD4892846360400908EB5 /* Film.swift in Sources */,
 				CBD03567284BBFE50001767A /* UIStackView+Extension.swift in Sources */,
 				CBADD48E28463DEB00908EB5 /* Actor.swift in Sources */,
+				CBADD48E28463DEB00908EB5 /* ActorData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +475,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -481,6 +503,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -516,6 +539,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		89577661284B509200A40BB2 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		89577662284B509200A40BB2 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 89577661284B509200A40BB2 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CBC66E9A2844E1670011C8D2 /* Project object */;
 }
