@@ -12,6 +12,7 @@ extension UIColor {
     static let customBlack = UIColor(red: 24, green: 24, blue: 33)
     static let customWhite = UIColor(red: 216, green: 218, blue: 222)
     static let customGray =  UIColor(red: 89, green: 90, blue: 99)
+    static let customRed = UIColor(red: 218, green: 44, blue: 53)
     
     convenience init(red: Int, green: Int, blue: Int) {
         let newRed = CGFloat(red) / 255
