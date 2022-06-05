@@ -16,6 +16,7 @@ class TitleSupplementaryView: UICollectionReusableView {
         label.textColor = .customWhite
         label.font = .preferredFont(forTextStyle: .title3,
                                     compatibleWith: .init(legibilityWeight: .bold))
+        //label.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -31,6 +32,7 @@ class TitleSupplementaryView: UICollectionReusableView {
 }
 
 extension TitleSupplementaryView {
+    
     func configure() {
         addSubview(label)
         
@@ -41,4 +43,5 @@ extension TitleSupplementaryView {
             label.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+    
 }

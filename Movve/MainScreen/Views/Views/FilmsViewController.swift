@@ -8,19 +8,17 @@
 import UIKit
 
 class FilmsViewController: UIViewController {
-        
-    typealias ViewModel = FilmsViewModel
     
-    var viewModel: ViewModel?
-    
-    private var dataSource: CustomDataSource!
     private let mainView = FilmsView()
     
+    private var viewModel: FilmsViewModel?
+    private var dataSource: DataSource!
+        
     override func loadView() {
         view = mainView
     }
     
-    init(viewModel: ViewModel) {
+    init(viewModel: FilmsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,59 +37,50 @@ class FilmsViewController: UIViewController {
         super.viewWillAppear(animated)
         setTabBarHidden(false)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         setTabBarHidden(true)
     }
-    
-    private func setTabBarHidden(_ hidden: Bool) {
-        guard let tabBar = tabBarController as? MainTabBarController else {
-            return
-        }
-        tabBar.setHidden(hidden)
-    }
-    
+        
 }
 
 private extension FilmsViewController {
     
     func initialSetup() {
-        extendedLayoutIncludesOpaqueBars = true
-        title = "Movve"
-        let rightButton = UIButton()
-        rightButton.setImage(.magnifyingglass, for: .normal)
-            //rightButton.setTitle("Right Button", for: .normal)
-            rightButton.setTitleColor(.purple, for: .normal)
-            rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
-            navigationController?.navigationBar.addSubview(rightButton)
-            rightButton.tag = 1
-            rightButton.frame = CGRect(x: self.view.frame.width, y: 0, width: 120, height: 20)
-
-            let targetView = self.navigationController?.navigationBar
-
-            let trailingContraint = NSLayoutConstraint(item: rightButton, attribute:
-                .trailingMargin, relatedBy: .equal, toItem: targetView,
-                                 attribute: .trailingMargin, multiplier: 1.0, constant: -16)
-            let bottomConstraint = NSLayoutConstraint(item: rightButton, attribute: .bottom, relatedBy: .equal,
-                                            toItem: targetView, attribute: .bottom, multiplier: 1.0, constant: -10)
-            rightButton.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([trailingContraint, bottomConstraint])
+        setupNavigationBar()
         viewModel?.updateView = {
             DispatchQueue.main.async { [unowned self] in
                 configureDataSource()
                 applySnapshot()
             }
         }
-        
         viewModel?.fetchData()
     }
     
-    @objc func rightButtonTapped() {
-        //navigationItem.searchController = mainView.searchController
+    func setupNavigationBar() {
+        navigationItem.hidesSearchBarWhenScrolling = false
+        extendedLayoutIncludesOpaqueBars = true
+        title = "Movve"
+        showSearchBarButton(shouldShow: true)
     }
     
+    func showSearchBarButton(shouldShow: Bool) {
+        if shouldShow {
+            navigationItem.setRightBarButton(mainView.searchButton,
+                                             animated: false)
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    func setSearchBarHidden(_ shouldShow: Bool) {
+        showSearchBarButton(shouldShow: !shouldShow)
+        navigationItem.titleView = shouldShow ? mainView.searchBar : nil
+    }
+
     func refreshFilms() {
+        
         viewModel?.updateView = {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
                 applySnapshot()
@@ -100,32 +89,35 @@ private extension FilmsViewController {
                 }
             }
         }
-        
         viewModel?.fetchData(shuffle: true)
     }
     
     func setupDelegates() {
         mainView.delegate = self
         mainView.collectionView.delegate = self
-        mainView.searchController.searchResultsUpdater = self
+        mainView.searchBar.delegate = self
     }
     
     func configureDataSource() {
         
-        let cellRegistration = CustomCellRegistration() { cell, _, item in
+        let cellRegistration = CellRegistration() { cell, _, item in
             
             cell.viewModel = item
         }
         
-        dataSource = CustomDataSource(collectionView: mainView.collectionView) { collectionView, indexPath, item in
+        dataSource = DataSource(collectionView: mainView.collectionView) {
+            collectionView, indexPath, item in
             
             collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
                                                          for: indexPath,
                                                          item: item)
         }
         
-        let supplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(elementKind: UICollectionView.elementKindSectionHeader) {
-            [unowned self] supplementaryView, elementKind, indexPath in
+        let supplementaryRegistration = SupplementaryRegistration(elementKind:
+                                                                  UICollectionView.elementKindSectionHeader) {
+            [unowned self] (supplementaryView,
+                            elementKind,
+                            indexPath) in
             
             let section = dataSource.snapshot().sectionIdentifiers[indexPath.section]
             supplementaryView.label.text = section.rawValue
@@ -143,7 +135,7 @@ private extension FilmsViewController {
         guard let films = viewModel?.films else {
             return
         }
-        var snapshot = CustomSnapshot()
+        var snapshot = Snapshot()
         FilmSection.allCases.forEach { section in
             if section != .searched {
                 snapshot.appendSections([section])
@@ -152,50 +144,88 @@ private extension FilmsViewController {
         }
         dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    func performQuery(_ filter: String) {
 
-    func performQuery(with filter: String) {
-        guard let viewModel = viewModel else {
-            return
-        }
-        
         if filter.isEmpty {
+            viewModel?.setSearchMode(false)
             applySnapshot()
             return
         }
         
-        let filteredFilms = viewModel.searchFilms(by: filter)
+        viewModel?.setSearchMode(true)
+        let filteredFilms = viewModel?.searchFilms(by: filter)
         
-        var snapshot = CustomSnapshot()
-        snapshot.appendSections([.searched])
-        snapshot.appendItems(filteredFilms)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        if let filteredFilms = filteredFilms {
+            var snapshot = Snapshot()
+            snapshot.appendSections([.searched])
+            snapshot.appendItems(filteredFilms)
+            dataSource.apply(snapshot, animatingDifferences: true)
+        }
+
+        //mainView.collectionView.collectionViewLayout.invalidateLayout()
     }
-
-}
-
-extension FilmsViewController: UISearchResultsUpdating {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else {
+    func setTabBarHidden(_ hidden: Bool) {
+        guard let tabBar = tabBarController as? MainTabBarController else {
             return
         }
-        performQuery(with: text)
+        tabBar.setHidden(hidden)
     }
     
 }
 
 extension FilmsViewController: FilmsViewDelegate {
-    
-    func didRefresh() {
+
+    func didRefreshFilms() {
         refreshFilms()
+    }
+    
+    func didTapSearchButton() {
+        setSearchBarHidden(true)
+    }
+    
+    func isSearchMode() -> Bool? {
+        return viewModel?.isSearchMode
+    }
+    
+}
+
+extension FilmsViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        setTabBarHidden(false)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setTabBarHidden(false)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0 {
+            setTabBarHidden(true)
+        }
+        else{
+            setTabBarHidden(false)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0 {
+            setTabBarHidden(true)
+        }
     }
     
 }
 
 extension FilmsViewController: UISearchBarDelegate {
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        setSearchBarHidden(false)
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        performQuery(with: searchText)
+        performQuery(searchText)
     }
     
 }

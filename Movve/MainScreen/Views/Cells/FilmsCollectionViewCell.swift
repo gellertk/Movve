@@ -11,7 +11,7 @@ class FilmsCollectionViewCell: UICollectionViewCell  {
     
     typealias ViewModel = FilmViewModel
     
-    lazy var imageHeightPopularConstraint = imageView.heightAnchor.constraint(equalToConstant:
+    lazy var imageHeightPopularSectionConstraint = imageView.heightAnchor.constraint(equalToConstant:
                                                                               K.Numeric.hightSectionImageHeight)
     
     var viewModel: ViewModel? {
@@ -63,8 +63,8 @@ class FilmsCollectionViewCell: UICollectionViewCell  {
         imageView.image = UIImage(data: viewModel.image ?? Data())
         titleLabel.text = viewModel.title
         releaseDateLabel.text = viewModel.releaseDate
-        imageHeightPopularConstraint.constant = viewModel.imageHeightConstant
-        imageHeightPopularConstraint.isActive = true
+        imageHeightPopularSectionConstraint.constant = viewModel.imageHeightConstant
+        imageHeightPopularSectionConstraint.isActive = true
     }
     
 }
