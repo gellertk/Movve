@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Film: Hashable {
+struct Film {
     
-    var title: String
+    let title: String
     var image: Data?
-    var actors: [Actor: String]?
+    var actors: [ActorResult: String]?
     var categories: [Category]?
     var releaseDate: Date?
     var duration: String?

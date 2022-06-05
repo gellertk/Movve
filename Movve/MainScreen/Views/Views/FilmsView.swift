@@ -8,7 +8,9 @@
 import UIKit
 
 protocol FilmsViewDelegate: AnyObject {
-    func didRefresh()
+    func didRefreshFilms()
+    func didTapSearchButton()
+    func isSearchMode() -> Bool?
 }
 
 class FilmsView: UIView {
@@ -17,25 +19,28 @@ class FilmsView: UIView {
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
+        refreshControl.addTarget(self,
+                                 action: #selector(didRefresh),
+                                 for: .valueChanged)
         refreshControl.tintColor = .customWhite
         
         return refreshControl
     }()
     
-    var searchController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.hidesNavigationBarDuringPresentation = false
-        //searchController.searchBar.placeholder = "Search"
+    lazy var searchButton: UIBarButtonItem = {
+        let searchButton = UIBarButtonItem(image: .magnifyingglass,
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(didTapSearchButton))
+        searchButton.tintColor = .white
         
-        return searchController
+        return searchButton
     }()
     
-    private lazy var searchBar: UISearchBar = {
+    lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .customBlack
         searchBar.barTintColor = .customBlack
-        searchBar.isHidden = true
         searchBar.tintColor = .customWhite
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = .customWhite
@@ -43,37 +48,10 @@ class FilmsView: UIView {
         return searchBar
     }()
     
-    lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = .customWhite
-        button.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
-        button.setImage(.magnifyingglass, for: .normal)
-        
-        return button
-    }()
-    
-    //    let customTitle: UILabel = {
-    //        let label = UILabel()
-    //        label.font = .preferredFont(forTextStyle: .largeTitle,
-    //                                    compatibleWith: .init(legibilityWeight: .bold))
-    //        var myMutableString = NSMutableAttributedString(string: "Movve")
-    //        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor,
-    //                                     value: UIColor.white,
-    //                                     range: NSRange(location: 0, length: 3))
-    //        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor,
-    //                                     value: UIColor.red,
-    //                                     range: NSRange(location: 3, length: 2))
-    //
-    //        label.attributedText = myMutableString
-    //
-    //        label.backgroundColor = .clear
-    //
-    //        return label
-    //    }()
-    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: createLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .customBlack
         collectionView.refreshControl = refreshControl
         
@@ -83,7 +61,6 @@ class FilmsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupView()
-        setupTapRecognizers()
     }
     
     required init?(coder: NSCoder) {
@@ -96,47 +73,19 @@ private extension FilmsView {
     
     func setupView() {
         backgroundColor = .customBlack
-        addSubviews([
-            //searchBar,
-            //customTitle,
-            //searchButton,
-            collectionView
-        ])
-        setupConstraints()
-    }
-    
-    func setupConstraints() {
-        let defaultBorderConstraint = CGFloat(20)
-        NSLayoutConstraint.activate([
-            //            customTitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            //            customTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: defaultBorderConstraint),
-            
-            //            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: defaultBorderConstraint / 2),
-            //            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -defaultBorderConstraint / 2),
-            //            searchBar.centerYAnchor.constraint(equalTo: customTitle.centerYAnchor),
-            //
-            //            searchButton.centerYAnchor.constraint(equalTo: customTitle.centerYAnchor),
-            //            searchButton.topAnchor.constraint(equalTo: topAnchor),
-            //            searchButton.trailingAnchor.constraint(equalTo: trailingAnchor,
-            //                                                   constant: -defaultBorderConstraint),
-            
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
+        addSubview(collectionView)
     }
     
     func createLayout() -> UICollectionViewCompositionalLayout {
         let interGroupSpacing = CGFloat(20)
         
-        let sectionProvider = { (sectionIndex: Int,
+        let sectionProvider = { [unowned self] (sectionIndex: Int,
                                  layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let filmSection = FilmSection.allCases[sectionIndex]
+            let currentSection = FilmSection.allCases[sectionIndex]
             
             var layoutHeight = K.Numeric.hightSectionImageHeight + K.Numeric.betweenImagesHeight
             var layoutWidth = CGFloat(0.35)
-            if filmSection != .popular {
+            if currentSection != .popular {
                 layoutHeight = K.Numeric.lowSectionImageHeight + K.Numeric.betweenImagesHeight
                 layoutWidth = 0.3
             }
@@ -146,11 +95,16 @@ private extension FilmsView {
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(layoutWidth),
                                                    heightDimension: .absolute(layoutHeight))
+            
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                            subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuous
+            if delegate?.isSearchMode() ?? false {
+                section.orthogonalScrollingBehavior = .none
+            } else {
+                section.orthogonalScrollingBehavior = .continuous
+            }
             section.interGroupSpacing = interGroupSpacing
             section.contentInsets = NSDirectionalEdgeInsets(top: 10,
                                                             leading: interGroupSpacing,
@@ -177,35 +131,18 @@ private extension FilmsView {
         return layout
     }
     
-    func setupSearchBar(isHidden: Bool) {
-        searchButton.isHidden = !isHidden
-        //customTitle.isHidden = !isHidden
-        UIView.transition(with: self,
-                          duration: 0.2,
-                          options: .transitionCrossDissolve,
-                          animations: { [unowned self] in
-            searchBar.isHidden = isHidden
-        })
-    }
-    
-    func setupTapRecognizers() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
-        addGestureRecognizer(tapGestureRecognizer)
-    }
-    
 }
 
 private extension FilmsView {
     
-    @objc func didTapSearchButton() {
-        setupSearchBar(isHidden: false)
-    }
-    
-    @objc func didTapView() {
-        setupSearchBar(isHidden: true)
-    }
-    
     @objc func didRefresh(sender: UIRefreshControl) {
-        delegate?.didRefresh()
+        delegate?.didRefreshFilms()
     }
+    
+    @objc func didTapSearchButton(sender: UIBarButtonItem) {
+        searchBar.becomeFirstResponder()
+        searchBar.showsCancelButton = true
+        delegate?.didTapSearchButton()
+    }
+    
 }

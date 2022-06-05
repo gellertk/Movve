@@ -8,23 +8,18 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
-
-    private lazy var mainView = FloatingBarView()
+    
+    private lazy var tabBarImages: [UIImage] = [.house,
+                                                .bookmark,
+                                                .person]
+    
+    private lazy var mainView = FloatingBarView(with: tabBarImages)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let initialViewModel = FilmsViewModel(filmsProvider: FilmsProvider())
-        
-        viewControllers = [
-            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel), prefersLargeTitle: true),
-            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel), prefersLargeTitle: true),
-            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel), prefersLargeTitle: true),
-            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel), prefersLargeTitle: true)
-        ]
-        tabBar.isHidden = true
-
+        setupItems()
         setupView()
+        setupDelegates()
     }
     
     func setHidden(_ hidden: Bool) {
@@ -34,7 +29,21 @@ class MainTabBarController: UITabBarController {
 
 private extension MainTabBarController {
     
+    func setupItems() {
+        let initialViewModel = FilmsViewModel(filmsProvider: FilmsProvider())
+        
+        viewControllers = [
+            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel),
+                                   prefersLargeTitle: true),
+            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel),
+                                   prefersLargeTitle: true),
+            UINavigationController(rootViewController: FilmsViewController(viewModel: initialViewModel),
+                                   prefersLargeTitle: true)
+        ]
+    }
+    
     func setupView() {
+        tabBar.isHidden = true
         view.addSubviews([mainView])
         setupConstraints()
     }
@@ -60,8 +69,8 @@ private extension MainTabBarController {
 
 extension MainTabBarController: FloatingBarViewDelegate {
     
-    func didTabBarButton(selectindex: Int) {
-        selectedIndex = selectindex
+    func didTapBarButton(selectIndex: Int) {
+        selectedIndex = selectIndex
     }
     
 }

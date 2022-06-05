@@ -12,7 +12,7 @@ struct ActorData: Codable {
     let cast: [ActorResult]
 }
 
-struct ActorResult: Codable {
+struct ActorResult: Codable, Hashable {
     
     let original_name: String        // Имя актера
     let character: String            //Кого играет

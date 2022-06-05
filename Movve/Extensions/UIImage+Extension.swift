@@ -17,7 +17,7 @@ extension UIImage {
     static var magnifyingglass: UIImage {
         let config = SymbolConfiguration(textStyle: .title1)
         let image = UIImage(systemName: "magnifyingglass",
-                                withConfiguration: config) ?? UIImage()
+                            withConfiguration: config) ?? UIImage()
         
         return image
     }
@@ -27,5 +27,28 @@ extension UIImage {
         
         return self.applyingSymbolConfiguration(config) ?? UIImage()
     }
+    
+    var SFSymbolName: String? {
+        guard let strSeq = "\(String(describing: self))".split(separator: ")").first else {
+            return nil
+        }
         
+        let str = String(strSeq).replacingOccurrences(of: " ", with: "")
+        guard let name = str.split(separator: ":").last else {
+            return nil
+        }
+        
+        return String(name).replacingOccurrences(of: " ", with: "")
+    }
+    
+    var fillVersion: UIImage {
+        if let SFSymbolName = SFSymbolName {
+            
+            return UIImage(systemName: SFSymbolName + ".fill",
+                           withConfiguration: configuration) ?? self
+        }
+        
+        return self
+    }
+    
 }
